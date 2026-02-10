@@ -1,0 +1,22 @@
+{
+  "name": "AfriNutri",
+  "short_name": "AfriNutri",
+  "description": "Scanner des plats africains et analyser leurs valeurs nutritionnelles",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#16a34a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
