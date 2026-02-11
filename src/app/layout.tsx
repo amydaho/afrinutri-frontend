@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
   title: "AfriNutri",
   description: "Analyse nutritionnelle des plats africains",
   manifest: "/manifest.json",
-  themeColor: "#16a34a",
   icons: {
     icon: "/icons/icon-192.png",
     apple: "/icons/icon-192.png",
@@ -14,6 +13,10 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "AfriNutri",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#16a34a",
 };
 
 export default function RootLayout({
