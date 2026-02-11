@@ -107,7 +107,7 @@ export default function ScanPage() {
           </p>
           <p className="text-sm text-gray-600">
             La caméra nécessite une connexion sécurisée (HTTPS) ou localhost.
-            Accédez à l'application via <strong>http://localhost:3000</strong> au lieu de l'adresse IP réseau.
+            Accédez à l'application via <strong>https://afrinutri-frontend1.vercel.app</strong> au lieu de l'adresse IP réseau.
           </p>
         </div>
       </div>
