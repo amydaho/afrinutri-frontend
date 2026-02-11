@@ -1,4 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import { Toaster } from "react-hot-toast";
+import Navigation from "@/components/Navigation";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "AfriNutri",
@@ -26,7 +29,32 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Navigation />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+            success: {
+              iconTheme: {
+                primary: "#16a34a",
+                secondary: "#fff",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "#ef4444",
+                secondary: "#fff",
+              },
+            },
+          }}
+        />
+      </body>
     </html>
   );
 }
