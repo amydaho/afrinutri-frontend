@@ -5,6 +5,15 @@ export const metadata: Metadata = {
   description: "Analyse nutritionnelle des plats africains",
   manifest: "/manifest.json",
   themeColor: "#16a34a",
+  icons: {
+    icon: "/icons/icon-192.png",
+    apple: "/icons/icon-192.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "AfriNutri",
+  },
 };
 
 export default function RootLayout({
