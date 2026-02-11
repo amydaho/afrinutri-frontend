@@ -54,17 +54,39 @@ export default function NutritionCard({ data }: NutritionCardProps) {
         />
       </div>
 
-      <div className="pt-4 border-t border-gray-200">
-        <h3 className="font-semibold text-gray-900 mb-3">Ingrédients détectés</h3>
-        <div className="flex flex-wrap gap-2">
-          {data.ingredients.map((ingredient, index) => (
-            <span
-              key={index}
-              className="px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-sm font-medium"
-            >
-              {ingredient}
-            </span>
-          ))}
+      <div className="pt-4 border-t border-gray-200 space-y-4">
+        {data.ingredientsWithWeight && data.ingredientsWithWeight.length > 0 && (
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-3">Composants pesés</h3>
+            <div className="flex flex-wrap gap-2">
+              {data.ingredientsWithWeight.map((item, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-sm font-medium"
+                >
+                  {item.name} <span className="text-green-600">({item.weight}g)</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        <div>
+          <h3 className="font-semibold text-gray-900 mb-3">
+            {data.ingredientsWithWeight && data.ingredientsWithWeight.length > 0 
+              ? "Tous les ingrédients" 
+              : "Ingrédients détectés"}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {data.ingredients.map((ingredient, index) => (
+              <span
+                key={index}
+                className="px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full text-sm"
+              >
+                {ingredient}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>

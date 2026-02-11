@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import { Camera, RotateCcw } from "lucide-react";
 import Button from "@/components/Button";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import IngredientEditor from "@/components/IngredientEditor";
 import { compressImage } from "@/utils/imageCompression";
 import { analyzeFoodMock } from "@/services/mockNutrition";
 import { addScan } from "@/lib/db";
 import toast from "react-hot-toast";
-import { ScanStatus } from "@/types/nutrition";
+import { ScanStatus, NutritionResult, IngredientWithWeight } from "@/types/nutrition";
 
 export default function ScanPage() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function ScanPage() {
   const [hasCamera, setHasCamera] = useState(true);
   const [status, setStatus] = useState<ScanStatus>("idle");
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<NutritionResult | null>(null);
 
   useEffect(() => {
     async function startCamera() {
@@ -87,15 +89,47 @@ export default function ScanPage() {
     try {
       const compressedImage = await compressImage(capturedImage, 1);
       const result = await analyzeFoodMock(compressedImage);
-      const scanId = await addScan(result);
-
+      
+      setAnalysisResult(result);
+      setStatus("confirming");
       toast.success(`${result.dishName} détecté !`);
-      router.push(`/results/${scanId}`);
     } catch (error) {
       console.error("Erreur lors de l'analyse:", error);
       toast.error("Erreur lors de l'analyse");
       setStatus("captured");
     }
+  };
+
+  const confirmIngredients = async (ingredientsWithWeight: IngredientWithWeight[]) => {
+    if (!analysisResult) return;
+
+    try {
+      const totalWeight = ingredientsWithWeight.reduce((sum, item) => sum + item.weight, 0);
+      const ratio = totalWeight / 100;
+      
+      const updatedResult = { 
+        ...analysisResult,
+        ingredientsWithWeight,
+        weight: totalWeight,
+        calories: Math.round(analysisResult.calories * ratio),
+        protein: Math.round(analysisResult.protein * ratio),
+        carbs: Math.round(analysisResult.carbs * ratio),
+        fat: Math.round(analysisResult.fat * ratio),
+        fiber: Math.round(analysisResult.fiber * ratio),
+      };
+      const scanId = await addScan(updatedResult);
+      
+      toast.success("Scan sauvegardé !");
+      router.push(`/results/${scanId}`);
+    } catch (error) {
+      console.error("Erreur lors de la sauvegarde:", error);
+      toast.error("Erreur lors de la sauvegarde");
+    }
+  };
+
+  const cancelConfirmation = () => {
+    setStatus("captured");
+    setAnalysisResult(null);
   };
 
   if (!hasCamera) {
@@ -123,52 +157,63 @@ export default function ScanPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-black">
-      <header className="p-4 text-white text-center font-semibold">
-        Scanner un plat
-      </header>
+    <>
+      <div className="flex flex-col h-screen bg-black">
+        <header className="p-4 text-white text-center font-semibold">
+          Scanner un plat
+        </header>
 
-      <div className="flex-1 relative">
-        {status === "idle" && (
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            className="h-full w-full object-cover"
-          />
-        )}
+        <div className="flex-1 relative">
+          {status === "idle" && (
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              className="h-full w-full object-cover"
+            />
+          )}
 
-        {status === "captured" && capturedImage && (
-          <img
-            src={capturedImage}
-            alt="Photo capturée"
-            className="h-full w-full object-cover"
-          />
-        )}
+          {status === "captured" && capturedImage && (
+            <img
+              src={capturedImage}
+              alt="Photo capturée"
+              className="h-full w-full object-cover"
+            />
+          )}
+        </div>
+
+        <div className="p-4 pb-20 bg-black space-y-3">
+          {status === "idle" && (
+            <Button onClick={takePhoto} size="lg" fullWidth>
+              <Camera className="inline mr-2" size={20} />
+              Prendre la photo
+            </Button>
+          )}
+
+          {status === "captured" && (
+            <>
+              <Button onClick={analyzePhoto} size="lg" fullWidth>
+                Analyser
+              </Button>
+              <Button onClick={retakePhoto} size="lg" fullWidth variant="outline">
+                <RotateCcw className="inline mr-2" size={20} />
+                Reprendre la photo
+              </Button>
+            </>
+          )}
+        </div>
+
+        <canvas ref={canvasRef} className="hidden" />
       </div>
 
-      <div className="p-4 bg-black space-y-3">
-        {status === "idle" && (
-          <Button onClick={takePhoto} size="lg" fullWidth>
-            <Camera className="inline mr-2" size={20} />
-            Prendre la photo
-          </Button>
-        )}
-
-        {status === "captured" && (
-          <>
-            <Button onClick={analyzePhoto} size="lg" fullWidth>
-              Analyser
-            </Button>
-            <Button onClick={retakePhoto} size="lg" fullWidth variant="outline">
-              <RotateCcw className="inline mr-2" size={20} />
-              Reprendre
-            </Button>
-          </>
-        )}
-      </div>
-
-      <canvas ref={canvasRef} className="hidden" />
-    </div>
+      {status === "confirming" && analysisResult && (
+        <IngredientEditor
+          mainIngredients={analysisResult.mainIngredients || analysisResult.ingredients}
+          allIngredients={analysisResult.ingredients}
+          onConfirm={confirmIngredients}
+          onCancel={cancelConfirmation}
+        />
+      )}
+    </>
   );
 }

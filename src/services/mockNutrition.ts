@@ -9,6 +9,7 @@ const MOCK_DISHES: Omit<NutritionResult, 'id' | 'photoUrl' | 'timestamp' | 'sync
     fat: 10,
     fiber: 4,
     ingredients: ['Riz', 'Tomates', 'Oignons', 'Poivrons', 'Épices', 'Huile'],
+    mainIngredients: ['Riz', 'Tomates', 'Poivrons'],
   },
   {
     dishName: 'Mafé (Sauce d\'arachide)',
@@ -18,6 +19,7 @@ const MOCK_DISHES: Omit<NutritionResult, 'id' | 'photoUrl' | 'timestamp' | 'sync
     fat: 22,
     fiber: 6,
     ingredients: ['Viande de bœuf', 'Pâte d\'arachide', 'Tomates', 'Oignons', 'Carottes', 'Chou'],
+    mainIngredients: ['Sauce mafé', 'Riz', 'Carottes', 'Chou'],
   },
   {
     dishName: 'Thiéboudienne',
@@ -27,6 +29,7 @@ const MOCK_DISHES: Omit<NutritionResult, 'id' | 'photoUrl' | 'timestamp' | 'sync
     fat: 18,
     fiber: 5,
     ingredients: ['Poisson', 'Riz', 'Tomates', 'Carottes', 'Aubergines', 'Chou', 'Manioc'],
+    mainIngredients: ['Poisson', 'Riz', 'Carottes', 'Chou', 'Manioc'],
   },
   {
     dishName: 'Poulet Yassa',
@@ -36,6 +39,7 @@ const MOCK_DISHES: Omit<NutritionResult, 'id' | 'photoUrl' | 'timestamp' | 'sync
     fat: 16,
     fiber: 3,
     ingredients: ['Poulet', 'Oignons', 'Citron', 'Moutarde', 'Huile d\'olive', 'Ail'],
+    mainIngredients: ['Poulet', 'Oignons', 'Riz'],
   },
   {
     dishName: 'Alloco (Bananes plantain frites)',
@@ -45,6 +49,7 @@ const MOCK_DISHES: Omit<NutritionResult, 'id' | 'photoUrl' | 'timestamp' | 'sync
     fat: 12,
     fiber: 4,
     ingredients: ['Bananes plantain', 'Huile de palme', 'Piment', 'Oignons'],
+    mainIngredients: ['Bananes plantain', 'Oignons'],
   },
   {
     dishName: 'Attiéké avec Poisson braisé',
@@ -54,6 +59,7 @@ const MOCK_DISHES: Omit<NutritionResult, 'id' | 'photoUrl' | 'timestamp' | 'sync
     fat: 14,
     fiber: 5,
     ingredients: ['Attiéké (semoule de manioc)', 'Poisson', 'Tomates', 'Oignons', 'Piment'],
+    mainIngredients: ['Attiéké', 'Poisson', 'Tomates'],
   },
 ];
 

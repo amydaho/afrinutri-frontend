@@ -1,3 +1,8 @@
+export interface IngredientWithWeight {
+  name: string;
+  weight: number;
+}
+
 export interface NutritionResult {
   id?: number;
   dishName: string;
@@ -7,9 +12,12 @@ export interface NutritionResult {
   fat: number;
   fiber: number;
   ingredients: string[];
+  mainIngredients?: string[];
+  ingredientsWithWeight?: IngredientWithWeight[];
   photoUrl: string;
   timestamp: Date;
   synced: boolean;
+  weight?: number;
 }
 
 export interface MacroNutrient {
@@ -20,4 +28,4 @@ export interface MacroNutrient {
   percentage?: number;
 }
 
-export type ScanStatus = 'idle' | 'captured' | 'analyzing' | 'complete' | 'error';
+export type ScanStatus = 'idle' | 'captured' | 'analyzing' | 'confirming' | 'complete' | 'error';

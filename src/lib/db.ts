@@ -41,5 +41,26 @@ export async function searchScans(query: string): Promise<NutritionResult[]> {
 }
 
 export async function getRecentScans(limit: number = 5): Promise<NutritionResult[]> {
-  return await db.scans.orderBy('timestamp').reverse().limit(limit).toArray();
+  return db.scans
+    .orderBy('timestamp')
+    .reverse()
+    .limit(limit)
+    .toArray();
+}
+
+export async function getTodayScans(): Promise<NutritionResult[]> {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  return db.scans
+    .where('timestamp')
+    .between(today, tomorrow, true, false)
+    .toArray();
+}
+
+export async function getTodayCalories(): Promise<number> {
+  const todayScans = await getTodayScans();
+  return todayScans.reduce((total, scan) => total + scan.calories, 0);
 }

@@ -69,15 +69,25 @@ export default function ResultsPage() {
       <div className="px-4 py-6 space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">{scan.dishName}</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Analysé le {new Date(scan.timestamp).toLocaleDateString('fr-FR', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </p>
+          <div className="flex items-center gap-2 mt-2">
+            <p className="text-sm text-gray-500">
+              Analysé le {new Date(scan.timestamp).toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </p>
+            {scan.weight && (
+              <>
+                <span className="text-gray-300">•</span>
+                <p className="text-sm font-medium text-green-600">
+                  {scan.weight}g
+                </p>
+              </>
+            )}
+          </div>
         </div>
 
         <NutritionCard data={scan} />
