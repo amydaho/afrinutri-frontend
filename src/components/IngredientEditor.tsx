@@ -71,7 +71,7 @@ export default function IngredientEditor({ mainIngredients, allIngredients, onCo
                     onChange={(e) => updateWeight(index, e.target.value)}
                     min="1"
                     max="5000"
-                    className="w-20 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-20 px-2 py-1 text-sm bg-white text-gray-900 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   />
                   <span className="text-xs text-gray-500">g</span>
                 </div>
@@ -96,7 +96,7 @@ export default function IngredientEditor({ mainIngredients, allIngredients, onCo
                 onChange={(e) => setNewIngredient(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ex: Piment, Gingembre..."
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="flex-1 px-4 py-2 bg-white text-gray-900 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-400"
               />
               <input
                 type="number"
@@ -105,7 +105,7 @@ export default function IngredientEditor({ mainIngredients, allIngredients, onCo
                 placeholder="100"
                 min="1"
                 max="5000"
-                className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-24 px-3 py-2 bg-white text-gray-900 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-400"
               />
               <span className="flex items-center text-sm text-gray-500">g</span>
               <button
