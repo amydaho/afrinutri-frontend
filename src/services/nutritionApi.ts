@@ -1,7 +1,7 @@
 import { api } from './api';
 import { NutritionResult } from '@/types/nutrition';
 
-export interface AnalyzeImageResponse {
+export interface NutritionAnalysis {
   dishName: string;
   calories: number;
   protein: number;
@@ -12,26 +12,31 @@ export interface AnalyzeImageResponse {
   mainIngredients: string[];
 }
 
+export interface AnalyzeImageResponse {
+  analysis: NutritionAnalysis;
+  scanId: string;
+}
+
 export async function analyzeFood(imageData: string): Promise<NutritionResult> {
   try {
-    // Convert base64 to blob
-    const base64Data = imageData.split(',')[1];
-    const blob = await fetch(imageData).then(r => r.blob());
-    
-    // Create FormData
-    const formData = new FormData();
-    formData.append('image', blob, 'dish.jpg');
-
-    // Call backend API
-    const response = await api.post<AnalyzeImageResponse>('/nutrition/analyze', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+    // Call backend API with base64 image
+    const response = await api.post<AnalyzeImageResponse>('/nutrition/analyze-food', {
+      userId: 'anonymous',
+      image: imageData,
     });
 
-    // Transform response to NutritionResult
+    // Extract structured nutrition data from response
+    const analysis = response.data.analysis;
+    
     return {
-      ...response.data,
+      dishName: analysis.dishName,
+      calories: analysis.calories,
+      protein: analysis.protein,
+      carbs: analysis.carbs,
+      fat: analysis.fat,
+      fiber: analysis.fiber,
+      ingredients: analysis.ingredients,
+      mainIngredients: analysis.mainIngredients,
       photoUrl: imageData,
       timestamp: new Date(),
       synced: true,
