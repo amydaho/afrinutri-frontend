@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://afrinutri-frontend1.vercel.app',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://afrinutri-backend1.vercel.app',
 });

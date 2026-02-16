@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import IngredientEditor from "@/components/IngredientEditor";
 import { compressImage } from "@/utils/imageCompression";
-import { analyzeFoodMock } from "@/services/mockNutrition";
+import { analyzeFood } from "@/services/nutritionApi";
 import { addScan } from "@/lib/db";
 import toast from "react-hot-toast";
 import { ScanStatus, NutritionResult, IngredientWithWeight } from "@/types/nutrition";
@@ -88,14 +88,14 @@ export default function ScanPage() {
 
     try {
       const compressedImage = await compressImage(capturedImage, 1);
-      const result = await analyzeFoodMock(compressedImage);
+      const result = await analyzeFood(compressedImage);
       
       setAnalysisResult(result);
       setStatus("confirming");
       toast.success(`${result.dishName} détecté !`);
     } catch (error) {
       console.error("Erreur lors de l'analyse:", error);
-      toast.error("Erreur lors de l'analyse");
+      toast.error("Erreur lors de l'analyse. Veuillez réessayer.");
       setStatus("captured");
     }
   };
