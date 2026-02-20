@@ -108,7 +108,7 @@ export default function NutritionValidation({
 
           {/* Portion size selector */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-800 mb-2">
+            <label className="block text-sm font-medium text-gray-900 mb-2">
               Taille de la portion
             </label>
             <div className="grid grid-cols-3 gap-2 mb-3">
@@ -116,8 +116,8 @@ export default function NutritionValidation({
                 onClick={() => setPortionSize("small")}
                 className={`py-2 px-4 rounded-lg border-2 transition-colors font-medium ${
                   portionSize === "small"
-                    ? "border-primary bg-primary text-white"
-                    : "border-gray-400 text-gray-800 hover:border-primary"
+                    ? "border-green-600 bg-green-600 text-white"
+                    : "border-gray-400 text-gray-900 hover:border-green-600"
                 }`}
               >
                 Petite
@@ -126,8 +126,8 @@ export default function NutritionValidation({
                 onClick={() => setPortionSize("medium")}
                 className={`py-2 px-4 rounded-lg border-2 transition-colors font-medium ${
                   portionSize === "medium"
-                    ? "border-primary bg-primary text-white"
-                    : "border-gray-400 text-gray-800 hover:border-primary"
+                    ? "border-green-600 bg-green-600 text-white"
+                    : "border-gray-400 text-gray-900 hover:border-green-600"
                 }`}
               >
                 Moyenne
@@ -136,8 +136,8 @@ export default function NutritionValidation({
                 onClick={() => setPortionSize("large")}
                 className={`py-2 px-4 rounded-lg border-2 transition-colors font-medium ${
                   portionSize === "large"
-                    ? "border-primary bg-primary text-white"
-                    : "border-gray-400 text-gray-800 hover:border-primary"
+                    ? "border-green-600 bg-green-600 text-white"
+                    : "border-gray-400 text-gray-900 hover:border-green-600"
                 }`}
               >
                 Grande
@@ -146,53 +146,53 @@ export default function NutritionValidation({
 
             {portionSize === "medium" && (
               <div className="mt-3">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-900 mb-1">
                   Poids personnalisé (g)
                 </label>
                 <input
                   type="number"
                   value={customWeight}
                   onChange={(e) => setCustomWeight(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 text-gray-900"
                   min="50"
                   max="1000"
                 />
               </div>
             )}
 
-            <p className="text-sm font-medium text-gray-700 mt-2">
+            <p className="text-sm font-medium text-gray-900 mt-2">
               Poids estimé: {nutrition.weight}g
             </p>
           </div>
 
           {/* Nutritional summary */}
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h4 className="font-semibold text-gray-800 mb-3">
+            <h4 className="font-semibold text-gray-900 mb-3">
               Valeurs nutritionnelles
             </h4>
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
-                <span className="text-gray-600">Calories:</span>
-                <span className="ml-2 font-semibold">{nutrition.calories} kcal</span>
+                <span className="text-gray-700">Calories:</span>
+                <span className="ml-2 font-semibold text-gray-900">{nutrition.calories} kcal</span>
               </div>
               <div>
-                <span className="text-gray-600">Protéines:</span>
-                <span className="ml-2 font-semibold">{nutrition.protein}g</span>
+                <span className="text-gray-700">Protéines:</span>
+                <span className="ml-2 font-semibold text-gray-900">{nutrition.protein}g</span>
               </div>
               <div>
-                <span className="text-gray-600">Glucides:</span>
-                <span className="ml-2 font-semibold">{nutrition.carbs}g</span>
+                <span className="text-gray-700">Glucides:</span>
+                <span className="ml-2 font-semibold text-gray-900">{nutrition.carbs}g</span>
               </div>
               <div>
-                <span className="text-gray-600">Lipides:</span>
-                <span className="ml-2 font-semibold">{nutrition.fat}g</span>
+                <span className="text-gray-700">Lipides:</span>
+                <span className="ml-2 font-semibold text-gray-900">{nutrition.fat}g</span>
               </div>
             </div>
           </div>
 
           {/* Ingredients editor */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-800 mb-2">
+            <label className="block text-sm font-medium text-gray-900 mb-2">
               Ingrédients détectés
             </label>
             
@@ -220,11 +220,11 @@ export default function NutritionValidation({
                 onChange={(e) => setNewIngredient(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleAddIngredient()}
                 placeholder="Ajouter un ingrédient..."
-                className="flex-1 px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900"
+                className="flex-1 px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 text-gray-900"
               />
               <button
                 onClick={handleAddIngredient}
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
                 <Plus size={20} />
               </button>
@@ -235,13 +235,13 @@ export default function NutritionValidation({
           <div className="flex gap-3">
             <button
               onClick={onCancel}
-              className="flex-1 px-4 py-2.5 bg-white border-2 border-gray-400 text-gray-800 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-4 py-2.5 bg-white border-2 border-gray-400 text-gray-900 font-medium rounded-lg hover:bg-gray-50 transition-colors"
             >
               Annuler
             </button>
             <button
               onClick={handleConfirm}
-              className="flex-1 px-4 py-2.5 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2.5 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
             >
               <Check size={18} />
               Valider
