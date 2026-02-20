@@ -18,6 +18,8 @@ export interface NutritionResult {
   timestamp: Date;
   synced: boolean;
   weight?: number;
+  estimatedWeight?: number;
+  confidence?: number;
 }
 
 export interface MacroNutrient {

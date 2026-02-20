@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import { Camera, RotateCcw } from "lucide-react";
 import Button from "@/components/Button";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import IngredientEditor from "@/components/IngredientEditor";
+import NutritionValidation from "@/components/NutritionValidation";
 import { compressImage } from "@/utils/imageCompression";
 import { analyzeFood } from "@/services/nutritionApi";
 import { addScan } from "@/lib/db";
 import toast from "react-hot-toast";
-import { ScanStatus, NutritionResult, IngredientWithWeight } from "@/types/nutrition";
+import { ScanStatus, NutritionResult } from "@/types/nutrition";
 
 export default function ScanPage() {
   const router = useRouter();
@@ -100,24 +100,16 @@ export default function ScanPage() {
     }
   };
 
-  const confirmIngredients = async (ingredientsWithWeight: IngredientWithWeight[]) => {
-    if (!analysisResult) return;
-
+  const confirmValidation = async (validatedResult: NutritionResult) => {
     try {
-      const totalWeight = ingredientsWithWeight.reduce((sum, item) => sum + item.weight, 0);
-      const ratio = totalWeight / 100;
-      
-      const updatedResult = { 
-        ...analysisResult,
-        ingredientsWithWeight,
-        weight: totalWeight,
-        calories: Math.round(analysisResult.calories * ratio),
-        protein: Math.round(analysisResult.protein * ratio),
-        carbs: Math.round(analysisResult.carbs * ratio),
-        fat: Math.round(analysisResult.fat * ratio),
-        fiber: Math.round(analysisResult.fiber * ratio),
+      const resultWithPhoto = {
+        ...validatedResult,
+        photoUrl: capturedImage || "",
+        timestamp: new Date(),
+        synced: false,
       };
-      const scanId = await addScan(updatedResult);
+      
+      const scanId = await addScan(resultWithPhoto);
       
       toast.success("Scan sauvegardé !");
       router.push(`/results/${scanId}`);
@@ -207,10 +199,9 @@ export default function ScanPage() {
       </div>
 
       {status === "confirming" && analysisResult && (
-        <IngredientEditor
-          mainIngredients={analysisResult.mainIngredients || analysisResult.ingredients}
-          allIngredients={analysisResult.ingredients}
-          onConfirm={confirmIngredients}
+        <NutritionValidation
+          result={analysisResult}
+          onConfirm={confirmValidation}
           onCancel={cancelConfirmation}
         />
       )}
