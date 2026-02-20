@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { X, Plus, Check } from "lucide-react";
-import Button from "./Button";
 import { NutritionResult } from "@/types/nutrition";
 
 interface NutritionValidationProps {
@@ -109,36 +108,36 @@ export default function NutritionValidation({
 
           {/* Portion size selector */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-800 mb-2">
               Taille de la portion
             </label>
             <div className="grid grid-cols-3 gap-2 mb-3">
               <button
                 onClick={() => setPortionSize("small")}
-                className={`py-2 px-4 rounded-lg border-2 transition-colors ${
+                className={`py-2 px-4 rounded-lg border-2 transition-colors font-medium ${
                   portionSize === "small"
                     ? "border-primary bg-primary text-white"
-                    : "border-gray-300 text-gray-700 hover:border-primary"
+                    : "border-gray-400 text-gray-800 hover:border-primary"
                 }`}
               >
                 Petite
               </button>
               <button
                 onClick={() => setPortionSize("medium")}
-                className={`py-2 px-4 rounded-lg border-2 transition-colors ${
+                className={`py-2 px-4 rounded-lg border-2 transition-colors font-medium ${
                   portionSize === "medium"
                     ? "border-primary bg-primary text-white"
-                    : "border-gray-300 text-gray-700 hover:border-primary"
+                    : "border-gray-400 text-gray-800 hover:border-primary"
                 }`}
               >
                 Moyenne
               </button>
               <button
                 onClick={() => setPortionSize("large")}
-                className={`py-2 px-4 rounded-lg border-2 transition-colors ${
+                className={`py-2 px-4 rounded-lg border-2 transition-colors font-medium ${
                   portionSize === "large"
                     ? "border-primary bg-primary text-white"
-                    : "border-gray-300 text-gray-700 hover:border-primary"
+                    : "border-gray-400 text-gray-800 hover:border-primary"
                 }`}
               >
                 Grande
@@ -147,21 +146,21 @@ export default function NutritionValidation({
 
             {portionSize === "medium" && (
               <div className="mt-3">
-                <label className="block text-sm text-gray-600 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Poids personnalisé (g)
                 </label>
                 <input
                   type="number"
                   value={customWeight}
                   onChange={(e) => setCustomWeight(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900"
                   min="50"
                   max="1000"
                 />
               </div>
             )}
 
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm font-medium text-gray-700 mt-2">
               Poids estimé: {nutrition.weight}g
             </p>
           </div>
@@ -193,7 +192,7 @@ export default function NutritionValidation({
 
           {/* Ingredients editor */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-800 mb-2">
               Ingrédients détectés
             </label>
             
@@ -203,10 +202,10 @@ export default function NutritionValidation({
                   key={index}
                   className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
                 >
-                  <span className="text-gray-800">{ingredient}</span>
+                  <span className="text-gray-900 font-medium">{ingredient}</span>
                   <button
                     onClick={() => handleRemoveIngredient(index)}
-                    className="text-red-500 hover:text-red-700"
+                    className="text-red-600 hover:text-red-700 p-1"
                   >
                     <X size={18} />
                   </button>
@@ -221,7 +220,7 @@ export default function NutritionValidation({
                 onChange={(e) => setNewIngredient(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleAddIngredient()}
                 placeholder="Ajouter un ingrédient..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                className="flex-1 px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900"
               />
               <button
                 onClick={handleAddIngredient}
@@ -234,20 +233,19 @@ export default function NutritionValidation({
 
           {/* Action buttons */}
           <div className="flex gap-3">
-            <Button
+            <button
               onClick={onCancel}
-              variant="secondary"
-              className="flex-1"
+              className="flex-1 px-4 py-2.5 bg-white border-2 border-gray-400 text-gray-800 font-medium rounded-lg hover:bg-gray-50 transition-colors"
             >
               Annuler
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={handleConfirm}
-              className="flex-1 flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2.5 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors flex items-center justify-center gap-2"
             >
-              <Check size={20} />
-              Valider et sauvegarder
-            </Button>
+              <Check size={18} />
+              Valider
+            </button>
           </div>
         </div>
       </div>
