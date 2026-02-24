@@ -23,6 +23,7 @@ export default function NutritionValidation({
   onConfirm,
   onCancel,
 }: NutritionValidationProps) {
+  const [dishName, setDishName] = useState(result.dishName);
   const [ingredients, setIngredients] = useState<string[]>(
     result.ingredients || []
   );
@@ -64,6 +65,7 @@ export default function NutritionValidation({
     
     const validatedResult: NutritionResult = {
       ...result,
+      dishName,
       ingredients,
       weight: nutrition.weight,
       calories: nutrition.calories,
@@ -94,14 +96,21 @@ export default function NutritionValidation({
             </button>
           </div>
 
-          {/* Dish name */}
+          {/* Dish name editor */}
           <div className="mb-6">
-            <h3 className="text-xl font-semibold text-primary mb-2">
-              {result.dishName}
-            </h3>
+            <label className="block text-sm font-medium text-gray-900 mb-2">
+              Nom du plat
+            </label>
+            <input
+              type="text"
+              value={dishName}
+              onChange={(e) => setDishName(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 text-gray-900 font-semibold text-lg"
+              placeholder="Nom du plat..."
+            />
             {result.confidence && (
-              <p className="text-sm text-gray-600">
-                Confiance: {result.confidence}%
+              <p className="text-sm text-gray-600 mt-2">
+                Confiance IA: {result.confidence}%
               </p>
             )}
           </div>
