@@ -35,8 +35,9 @@ export default function TestUploadPage() {
     setResult(null);
 
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://afrinutri-backend.vercel.app';
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/nutrition/test-upload`,
+        `${apiUrl}/nutrition/test-upload`,
         {
           method: "POST",
           headers: {
