@@ -68,6 +68,17 @@ export default function Home() {
                 Voir l'historique
               </Button>
             )}
+
+            {/* Temporary Test Upload Button */}
+            <Button
+              onClick={() => router.push("/test-upload")}
+              size="lg"
+              fullWidth
+              variant="outline"
+              className="border-orange-300 text-orange-600 hover:bg-orange-50"
+            >
+              🧪 Test Upload (Dev)
+            </Button>
           </div>
 
           {/* Recent Scans */}
